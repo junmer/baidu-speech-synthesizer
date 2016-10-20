@@ -29,7 +29,7 @@ speaker.on('end', () => bss.speak('bye world'))
 ## Quick Start
 
 ```html
-<script src="//unpkg.com/baidu-speech-synthesizer/dist/index.min.js"></script>
+<script src="https://unpkg.com/baidu-speech-synthesizer@latest/dist/index.min.js"></script>
 
 <script>
 var bss = new BDSSpeechSynthesizer();
