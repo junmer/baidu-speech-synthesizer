@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>speech synthesizer example</title>
+	<script src="../dist/index.js"></script>
+</head>
+<body>
+	<h1 id="title">百度语音合成服务</h1>
+	<p id="content">
+
+		完全永久免费
+		业界首创完全永久免费新形式，为开发者提供最流畅最自然的语音合成服务。完全免费，永久使用，彻底摆脱限制。
+
+		离线在线融合模式
+		SDK可以根据当前网络状况，自动判断使用本地引擎还是云端引擎进行语音合成，再也不用担心流量消耗!
+
+		多语言多音色可选
+		中文普通话、中英文混读、男声、女声任你选，更支持语速、音调、音量、音频码率设置，让你的应用拥有最甜美和最磁性的声音！
+
+		基于弹性单元挑选策略的选音技术
+		多层级/尺度的单元选择，弹性化的统计模型，快速的单元预选，全面的代价设计，挑选出最符合自然语音特点的单元，听起来更舒服自然。
+
+	</p>
+
+	<button id="play-title">play title</button>
+	<button id="play-content">play content</button>
+
+	<script>
+
+		var bss = new BDSSpeechSynthesizer({per: 1});
+
+		var title = document.getElementById('title').innerText;
+		var content = document.getElementById('content').innerText;
+
+		bss.speak(title);
+
+		var playTitle = document.getElementById('play-title')
+		playTitle.addEventListener('click', function () {
+			bss.speak(title);
+		})
+
+		var playContent = document.getElementById('play-content')
+		playContent.addEventListener('click', function () {
+			bss.stop();
+			bss.speak(content);
+		})
+
+	</script>
+</body>
+</html>

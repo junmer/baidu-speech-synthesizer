@@ -1,0 +1,40 @@
+{
+  "name": "baidu-speech-synthesizer",
+  "version": "0.0.1",
+  "description": "Play sound from text in browser using Baidu TTS Service",
+  "tags": [
+    "tts",
+    "SpeechSynthesizer",
+    "text2audio"
+  ],
+  "repository": "junmer/baidu-speech-synthesizer",
+  "main": "dist/index.js",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "minify": "uglifyjs dist/index.js -mco dist/index.min.js",
+    "dist": "rm -rf dist && npm run build && npm run minify"
+  },
+  "author": "junmer",
+  "license": "MIT",
+  "dependencies": {
+    "howler": "^2.0.1",
+    "query-string": "^4.2.3"
+  },
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.8.0",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-register": "^6.11.6",
+    "babelrc-rollup": "^3.0.0",
+    "rollup": "^0.34.7",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-watch": "^2.5.0",
+    "uglifyjs": "^2.4.10"
+  }
+}
