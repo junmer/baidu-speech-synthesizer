@@ -1,6 +1,18 @@
 baidu-speech-synthesizer
 ==
 
+[![NPM version][npm-image]][npm-url]
+[![Downloads][downloads-image]][npm-url]
+[![Dependencies][dep-image]][dep-url]
+[![License][license-image]][npm-url]
+
+[npm-url]: https://npmjs.org/package/baidu-speech-synthesizer
+[downloads-image]: http://img.shields.io/npm/dm/baidu-speech-synthesizer.svg
+[npm-image]: http://img.shields.io/npm/v/baidu-speech-synthesizer.svg
+[dep-url]: https://david-dm.org/junmer/baidu-speech-synthesizer
+[dep-image]: http://img.shields.io/david/junmer/baidu-speech-synthesizer.svg
+[license-image]: https://img.shields.io/github/license/junmer/baidu-speech-synthesizer.svg
+
 > Play sound from text in browser using [Baidu TTS Service](http://yuyin.baidu.com/docs/tts/136)
 
 ## Usage
@@ -11,9 +23,7 @@ import BDSSpeechSynthesizer from 'baidu-speech-synthesizer'
 let bss = new BDSSpeechSynthesizer()
 let speaker = bss.speak('hello world')
 
-speaker.on('end', () => {
-	bss.speak('bye world')
-})
+speaker.on('end', () => bss.speak('bye world'))
 ```
 
 ## Quick Start
@@ -42,7 +52,7 @@ Play the sound of text, return the speaker.
 * **text**: `String` text to be speak.
 * **speechOptions**: `Object` `optional` Speech synthesizer Config.
 * **playerOptions**: `Object` `optional` Player Config.
-	* **autoplay**: `boolean` Play the sound right now, Defaults `true`.
+    * **autoplay**: `boolean` Play the sound right now, Defaults `true`.
 
 ### .playing()
 
