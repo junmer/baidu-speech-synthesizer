@@ -1,8 +1,8 @@
 {
   "name": "baidu-speech-synthesizer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Play sound from text in browser using Baidu TTS Service",
-  "tags": [
+  "keywords": [
     "tts",
     "SpeechSynthesizer",
     "text2audio"
@@ -10,14 +10,14 @@
   "repository": "junmer/baidu-speech-synthesizer",
   "main": "dist/index.js",
   "files": [
-    "lib",
-    "dist"
+    "dist",
+    "lib"
   ],
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
     "minify": "uglifyjs dist/index.js -mco dist/index.min.js",
-    "dist": "rm -rf dist && npm run build && npm run minify"
+    "prepublish": "rm -rf dist && npm run build && npm run minify"
   },
   "author": "junmer",
   "license": "MIT",

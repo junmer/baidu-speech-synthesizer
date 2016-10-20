@@ -17,7 +17,7 @@ baidu-speech-synthesizer
 
 ## Usage
 
-```
+```javascript
 import BDSSpeechSynthesizer from 'baidu-speech-synthesizer'
 
 let bss = new BDSSpeechSynthesizer()
@@ -28,7 +28,7 @@ speaker.on('end', () => bss.speak('bye world'))
 
 ## Quick Start
 
-```
+```html
 <script src="//unpkg.com/baidu-speech-synthesizer/dist/index.min.js"></script>
 
 <script>
