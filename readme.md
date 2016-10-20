@@ -14,7 +14,6 @@ let speaker = bss.speak('hello world')
 speaker.on('end', () => {
 	bss.speak('bye world')
 })
-
 ```
 
 ## Quick Start
@@ -38,12 +37,25 @@ Creates a new `BDSSpeechSynthesizer` instance.
 
 ### .speak(text[, speechOptions[, playerOptions]])
 
-Play the sound of text.
+Play the sound of text, return the speaker.
+
+* **text**: `String` text to be speak.
+* **speechOptions**: `Object` `optional` Speech synthesizer Config.
+* **playerOptions**: `Object` `optional` Player Config.
+	* **autoplay**: `boolean` Play the sound right now, Defaults `true`.
 
 ### .playing()
 
-Check if playing
+Check if someone speaking
 
 ### .stop()
 
-Stop the player of this instance
+Stop the player of this instance.
+
+### .mute()
+
+Mutes the sound, but doesn't pause the playback.
+
+### .volume()
+
+Get/set volume of this sound.
