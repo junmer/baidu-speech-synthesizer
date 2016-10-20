@@ -6,6 +6,10 @@
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
+
+
+
+
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
@@ -2191,7 +2195,7 @@ var howler_core = createCommonjsModule(function (module, exports) {
 var Howl = howler_core.Howl;
 var Howler = howler_core.Howler;
 
-var __moduleExports = function (str) {
+var index$2 = function (str) {
 	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
 		return '%' + c.charCodeAt(0).toString(16).toUpperCase();
 	});
@@ -2253,7 +2257,7 @@ function shouldUseNative() {
 	}
 }
 
-var __moduleExports$1 = shouldUseNative() ? Object.assign : function (target, source) {
+var index$4 = shouldUseNative() ? Object.assign : function (target, source) {
 	var from;
 	var to = toObject(target);
 	var symbols;
@@ -2280,8 +2284,8 @@ var __moduleExports$1 = shouldUseNative() ? Object.assign : function (target, so
 	return to;
 };
 
-var strictUriEncode = __moduleExports;
-var objectAssign = __moduleExports$1;
+var strictUriEncode = index$2;
+var objectAssign = index$4;
 
 function encode(value, opts) {
 	if (opts.encode) {
@@ -2290,50 +2294,6 @@ function encode(value, opts) {
 
 	return value;
 }
-
-var extract = function (str) {
-	return str.split('?')[1] || '';
-};
-
-var parse = function (str) {
-	// Create an object with no prototype
-	// https://github.com/sindresorhus/query-string/issues/47
-	var ret = Object.create(null);
-
-	if (typeof str !== 'string') {
-		return ret;
-	}
-
-	str = str.trim().replace(/^(\?|#|&)/, '');
-
-	if (!str) {
-		return ret;
-	}
-
-	str.split('&').forEach(function (param) {
-		var parts = param.replace(/\+/g, ' ').split('=');
-		// Firefox (pre 40) decodes `%3D` to `=`
-		// https://github.com/sindresorhus/query-string/pull/37
-		var key = parts.shift();
-		var val = parts.length > 0 ? parts.join('=') : undefined;
-
-		key = decodeURIComponent(key);
-
-		// missing `=` should be `null`:
-		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
-		val = val === undefined ? null : decodeURIComponent(val);
-
-		if (ret[key] === undefined) {
-			ret[key] = val;
-		} else if (Array.isArray(ret[key])) {
-			ret[key].push(val);
-		} else {
-			ret[key] = [ret[key], val];
-		}
-	});
-
-	return ret;
-};
 
 var stringify = function (obj, opts) {
 	var defaults = {
@@ -2376,12 +2336,6 @@ var stringify = function (obj, opts) {
 	}).filter(function (x) {
 		return x.length > 0;
 	}).join('&') : '';
-};
-
-var index = {
-	extract: extract,
-	parse: parse,
-	stringify: stringify
 };
 
 var asyncGenerator = function () {
@@ -2497,6 +2451,10 @@ var asyncGenerator = function () {
   };
 }();
 
+
+
+
+
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -2521,12 +2479,86 @@ var createClass = function () {
   };
 }();
 
+
+
+
+
+
+
+var get = function get(object, property, receiver) {
+  if (object === null) object = Function.prototype;
+  var desc = Object.getOwnPropertyDescriptor(object, property);
+
+  if (desc === undefined) {
+    var parent = Object.getPrototypeOf(object);
+
+    if (parent === null) {
+      return undefined;
+    } else {
+      return get(parent, property, receiver);
+    }
+  } else if ("value" in desc) {
+    return desc.value;
+  } else {
+    var getter = desc.get;
+
+    if (getter === undefined) {
+      return undefined;
+    }
+
+    return getter.call(receiver);
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var set = function set(object, property, value, receiver) {
+  var desc = Object.getOwnPropertyDescriptor(object, property);
+
+  if (desc === undefined) {
+    var parent = Object.getPrototypeOf(object);
+
+    if (parent !== null) {
+      set(parent, property, value, receiver);
+    }
+  } else if ("value" in desc && desc.writable) {
+    desc.value = value;
+  } else {
+    var setter = desc.set;
+
+    if (setter !== undefined) {
+      setter.call(receiver, value);
+    }
+  }
+
+  return value;
+};
+
 /**
  * @file BDSSpeechSynthesizer
  * @author junmer
  */
 
-var methods = ['mute', 'volume'];
+/**
+ * BDSSpeechSynthesizer playerMethods
+ *
+ * @type {Array}
+ */
+var playerMethods = ['mute', 'volume'];
 
 /**
  * BDSSpeechSynthesizer
@@ -2537,7 +2569,7 @@ var methods = ['mute', 'volume'];
 var BDSSpeechSynthesizer = function () {
 
     /**
-     * BDSSpeechSynthesizer 
+     * BDSSpeechSynthesizer
      *
      * @constructor
      * @param {Object} options options
@@ -2549,8 +2581,12 @@ var BDSSpeechSynthesizer = function () {
      * @param {number=} options.per    发音人选择，取值0-1, 0为女声，1为男声，默认为女声
      */
     function BDSSpeechSynthesizer(options) {
+        var _this = this;
+
         classCallCheck(this, BDSSpeechSynthesizer);
 
+
+        this.speakers = {};
 
         this.options = {
             lan: 'zh',
@@ -2563,15 +2599,12 @@ var BDSSpeechSynthesizer = function () {
             pdt: '1'
         };
 
-        this.speakers = {};
-
         Object.assign(this.options, options);
 
         // bind Howler public methods
-        methods.map(function (method) {
-
-            this[method] = Howler[method];
-        }.bind(this));
+        playerMethods.map(function (method) {
+            return _this[method] = Howler[method];
+        });
     }
 
     /**
@@ -2589,8 +2622,8 @@ var BDSSpeechSynthesizer = function () {
      */
 
     /**
-     * synthesize 
-     * 
+     * synthesize
+     *
      * @param {string} text 要播放的文字
      * @param {Object} options options
      * @param {string} options.lan    语言选择,填写zh
@@ -2599,6 +2632,7 @@ var BDSSpeechSynthesizer = function () {
      * @param {number=} options.pit    音调，取值0-9，默认为5中语调
      * @param {number=} options.vol    音量，取值0-9，默认为5中音量
      * @param {number=} options.per    发音人选择，取值0-1, 0为女声，1为男声，默认为女声
+     * @return {string} 语音地址
      */
 
 
@@ -2613,10 +2647,10 @@ var BDSSpeechSynthesizer = function () {
 
         /**
          * getSpeaker
-         * 
+         *
          * @param  {string} src     src
          * @param  {Object} options options
-         * @return {speaker}         speaker
+         * @return {Howler}         Howler instance
          */
 
     }, {
@@ -2642,8 +2676,8 @@ var BDSSpeechSynthesizer = function () {
         }
 
         /**
-         * speak 
-         * 
+         * speak
+         *
          * @param {string} text 要播放的文字
          * @param {Object=} options options
          * @param {string} options.lan    语言选择,填写zh
@@ -2654,6 +2688,7 @@ var BDSSpeechSynthesizer = function () {
          * @param {number=} options.per    发音人选择，取值0-1, 0为女声，1为男声，默认为女声
          * @param {Object=} playerOptions     播放器配置
          * @param {boolean} playerOptions.autoplay 自动播放
+         * @return {Howler} Howler instance
          */
 
     }, {
@@ -2674,22 +2709,25 @@ var BDSSpeechSynthesizer = function () {
 
         /**
          * playing
-         * 
+         *
+         * @describe  Check if someone speaking
+         * @return {boolean} is playing
          */
 
     }, {
         key: 'playing',
         value: function playing() {
-            var _this = this;
+            var _this2 = this;
 
             return Object.keys(this.speakers).some(function (key) {
-                return _this.speakers[key].playing();
+                return _this2.speakers[key].playing();
             });
         }
 
         /**
          * stop
-         * 
+         *
+         * @describe Stop the player of this instance
          */
 
     }, {
