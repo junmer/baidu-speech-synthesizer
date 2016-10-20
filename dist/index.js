@@ -2542,6 +2542,7 @@ var BDSSpeechSynthesizer = function () {
      * @constructor
      * @param {Object} options options
      * @param {string} options.lan    语言选择,填写zh
+     * @param {string} options.cuid    用户唯一标识
      * @param {number=} options.spd    语速，取值0-9，默认为5中语速
      * @param {number=} options.pit    音调，取值0-9，默认为5中语调
      * @param {number=} options.vol    音量，取值0-9，默认为5中音量
@@ -2553,8 +2554,13 @@ var BDSSpeechSynthesizer = function () {
 
         this.options = {
             lan: 'zh',
-            pid: '101',
-            ie: 'UTF-8'
+            cuid: 'baidu_speech_demo',
+            spd: '5',
+            pit: '5',
+            vol: '5',
+            per: '0',
+            ctp: '1',
+            pdt: '1'
         };
 
         this.speakers = {};
@@ -2587,10 +2593,11 @@ var BDSSpeechSynthesizer = function () {
      * 
      * @param {string} text 要播放的文字
      * @param {Object} options options
+     * @param {string} options.lan    语言选择,填写zh
+     * @param {string} options.cuid    用户唯一标识
      * @param {number=} options.spd    语速，取值0-9，默认为5中语速
      * @param {number=} options.pit    音调，取值0-9，默认为5中语调
      * @param {number=} options.vol    音量，取值0-9，默认为5中音量
-     * @param {number=} options.per    发音人选择，取值0-1, 0为女声，1为男声，默认为女声
      * @param {number=} options.per    发音人选择，取值0-1, 0为女声，1为男声，默认为女声
      */
 
@@ -2599,7 +2606,7 @@ var BDSSpeechSynthesizer = function () {
         key: 'synthesize',
         value: function synthesize(text, options) {
 
-            var query = Object.assign({}, this.options, { text: text }, options);
+            var query = Object.assign({}, this.options, { tex: text }, options);
 
             return BDSSpeechSynthesizer.SERVER_URL + stringify(query);
         }
@@ -2639,6 +2646,8 @@ var BDSSpeechSynthesizer = function () {
          * 
          * @param {string} text 要播放的文字
          * @param {Object=} options options
+         * @param {string} options.lan    语言选择,填写zh
+         * @param {string} options.cuid    用户唯一标识
          * @param {number=} options.spd    语速，取值0-9，默认为5中语速
          * @param {number=} options.pit    音调，取值0-9，默认为5中语调
          * @param {number=} options.vol    音量，取值0-9，默认为5中音量
