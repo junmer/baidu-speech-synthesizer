@@ -2,15 +2,15 @@ baidu-speech-synthesizer
 ==
 
 [![NPM version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
 [![Downloads][downloads-image]][npm-url]
-[![Dependencies][dep-image]][dep-url]
 [![License][license-image]][npm-url]
 
 [npm-url]: https://npmjs.org/package/baidu-speech-synthesizer
 [downloads-image]: http://img.shields.io/npm/dm/baidu-speech-synthesizer.svg
 [npm-image]: http://img.shields.io/npm/v/baidu-speech-synthesizer.svg
-[dep-url]: https://david-dm.org/junmer/baidu-speech-synthesizer
-[dep-image]: http://img.shields.io/david/junmer/baidu-speech-synthesizer.svg
+[travis-url]: https://travis-ci.org/junmer/aidu-speech-synthesizer
+[travis-image]: http://img.shields.io/travis/junmer/aidu-speech-synthesizer.svg
 [license-image]: https://img.shields.io/github/license/junmer/baidu-speech-synthesizer.svg
 
 > Play sound from text in browser using [Baidu TTS Service](http://yuyin.baidu.com/docs/tts/136)

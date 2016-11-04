@@ -23,8 +23,6 @@ describe('#synthesizer', function () {
 
         it('speaker should has ended', function (done) {
 
-            console.log(speaker.on);
-
             speaker.on('ended', function () {
 
                 expect(typeof speaker.on).toBe('function');

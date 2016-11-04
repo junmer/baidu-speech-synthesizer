@@ -408,13 +408,13 @@ Sound.event = {
 
     _proxy: {},
 
-    dispach: function dispach(name) {
+    dispach: function dispach(name, current) {
 
         var events = this._events[name];
 
         Object.keys(events).forEach(function (id) {
 
-            if (id !== Sound.node.id) {
+            if (id !== current) {
                 return;
             }
 
@@ -428,7 +428,7 @@ Sound.event = {
 
         if (!this._proxy[name]) {
             var audio = Sound.getAudio();
-            this._proxy[name] = audio.addEventListener(name, this.dispach.bind(this, name));
+            this._proxy[name] = audio.addEventListener(name, this.dispach.bind(this, name, audio.id));
         }
 
         this._events[name] = this._events[name] || {};
