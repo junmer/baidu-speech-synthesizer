@@ -220,10 +220,29 @@ var set = function set(object, property, value, receiver) {
  */
 
 /**
+ * 唯一id的起始值
+ *
+ * @inner
+ * @type {number}
+ */
+var guidIndex = 1;
+
+/**
+ * 获取唯一id
+ *
+ * @inner
+ * @return {string} 唯一id
+ */
+function guid() {
+    return '_s_' + guidIndex++;
+}
+
+/**
  * 声音
  *
  * @class
  */
+
 var Sound = function () {
 
     /**
@@ -242,28 +261,50 @@ var Sound = function () {
         };
 
 
+        this.id = guid();
+
         Object.assign(this.options, options);
 
-        var audio = Sound.getAudio(this.options.src);
+        Sound.getAudio(this.options.src);
 
         if (!options.autoplay) {
-            return audio;
+            return this;
         }
 
-        audio.play();
-
-        return audio;
+        this.play();
+        return this;
     }
 
-    /**
-     * 播放
-     */
-
-
     createClass(Sound, [{
+        key: 'on',
+        value: function on(name, fn) {
+            Sound.event.on(this.id, name, fn);
+            return this;
+        }
+    }, {
+        key: 'once',
+        value: function once(name, fn) {
+            Sound.event.once(this.id, name, fn);
+            return this;
+        }
+    }, {
+        key: 'off',
+        value: function off(name, fn) {
+            Sound.event.off(this.id, name, fn);
+            return this;
+        }
+
+        /**
+         * 播放
+         */
+
+    }, {
         key: 'play',
         value: function play() {
-            Sound.getAudio(this.options.src).play();
+            var audio = Sound.getAudio(this.options.src);
+            audio.id = this.id;
+            audio.play();
+            return this;
         }
 
         /**
@@ -274,6 +315,7 @@ var Sound = function () {
         key: 'stop',
         value: function stop() {
             Sound.stop();
+            return this;
         }
 
         /**
@@ -352,6 +394,102 @@ var Sound = function () {
     }]);
     return Sound;
 }();
+
+/**
+ * 声音的事件总线
+ * 
+ * @type {Object}
+ */
+
+
+Sound.event = {
+
+    _events: {},
+
+    _proxy: {},
+
+    dispach: function dispach(name) {
+
+        var events = this._events[name];
+
+        Object.keys(events).forEach(function (id) {
+
+            if (id !== Sound.node.id) {
+                return;
+            }
+
+            events[id].forEach(function (fn) {
+                fn();
+            });
+        });
+    },
+
+    on: function on(id, name, fn) {
+
+        if (!this._proxy[name]) {
+            var audio = Sound.getAudio();
+            this._proxy[name] = audio.addEventListener(name, this.dispach.bind(this, name));
+        }
+
+        this._events[name] = this._events[name] || {};
+        this._events[name][id] = this._events[name][id] || [];
+        this._events[name][id].push(fn);
+    },
+
+    once: function once(id, name, fn) {
+
+        function onceFn() {
+            fn();
+            this.off(id, name, fn);
+        }
+
+        // 挂到on上以方便删除
+        onceFn.fn = fn;
+
+        this.on(id, name, onceFn.bind(this));
+    },
+
+    off: function off(id, name, fn) {
+
+        // 移除所有事件
+        if (0 === arguments.length) {
+            this._events = {};
+
+            var audio = Sound.getAudio();
+            var proxys = this._proxy;
+            Object.keys(proxys).forEach(function (name) {
+                audio.removeEventListener(name);
+            });
+            this._proxy = {};
+
+            return this;
+        }
+
+        if (!this._proxy[name]) {
+            return this;
+        }
+
+        if (!this._events[name]) {
+            return this;
+        }
+
+        var listeners = this._events[name][id];
+
+        if (!listeners) {
+            return this;
+        }
+
+        var cb;
+        for (var i = 0; i < listeners.length; i++) {
+            cb = listeners[i];
+            if (cb === fn || cb.fn === fn) {
+                listeners.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+};
 
 var index$2 = function (str) {
 	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
