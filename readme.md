@@ -54,18 +54,7 @@ Play the sound of text, return the speaker.
 * **playerOptions**: `Object` `optional` Player Config.
     * **autoplay**: `boolean` Play the sound right now, Defaults `true`.
 
-### .playing()
-
-Check if someone speaking
-
 ### .stop()
 
 Stop the player of this instance.
 
-### .mute()
-
-Mutes the sound, but doesn't pause the playback.
-
-### .volume()
-
-Get/set volume of this sound.

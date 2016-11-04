@@ -8,13 +8,13 @@ let pkg = require('./package.json');
 export default {
   entry: 'lib/index.js',
   plugins: [
+    babel(babelrc()),
     resolve({
       jsnext: true,
       main: true,
       browser: true,
     }),
-    commonjs(),
-    babel(babelrc()),
+    commonjs()
   ],
   targets: [
     {
