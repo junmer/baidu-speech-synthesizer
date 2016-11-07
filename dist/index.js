@@ -296,6 +296,8 @@ var Sound = function () {
 
         /**
          * 播放
+         *
+         * @return {Sound} sound
          */
 
     }, {
@@ -309,6 +311,8 @@ var Sound = function () {
 
         /**
          * 停止
+         *
+         * @return {Sound} sound
          */
 
     }, {
@@ -397,7 +401,7 @@ var Sound = function () {
 
 /**
  * 声音的事件总线
- * 
+ *
  * @type {Object}
  */
 
@@ -457,7 +461,6 @@ Sound.event = {
         // 移除所有事件
         if (0 === arguments.length) {
             this._events = {};
-
             var audio = Sound.getAudio();
             var proxys = this._proxy;
             Object.keys(proxys).forEach(function (name) {
