@@ -408,18 +408,18 @@ Sound.event = {
 
     _proxy: {},
 
-    dispach: function dispach(name, current) {
+    dispach: function dispach(name, audio) {
 
         var events = this._events[name];
 
         Object.keys(events).forEach(function (id) {
 
-            if (id !== current) {
+            if (id !== audio.id) {
                 return;
             }
 
             events[id].forEach(function (fn) {
-                fn();
+                fn(Sound.node);
             });
         });
     },
@@ -428,7 +428,8 @@ Sound.event = {
 
         if (!this._proxy[name]) {
             var audio = Sound.getAudio();
-            this._proxy[name] = audio.addEventListener(name, this.dispach.bind(this, name, audio.id));
+            audio.addEventListener(name, this.dispach.bind(this, name, audio));
+            this._proxy[name] = 1;
         }
 
         this._events[name] = this._events[name] || {};
@@ -438,15 +439,17 @@ Sound.event = {
 
     once: function once(id, name, fn) {
 
-        function onceFn() {
-            fn();
-            this.off(id, name, fn);
+        var me = this;
+
+        function onceFn(args) {
+            fn(args);
+            me.off(id, name, fn);
         }
 
         // 挂到on上以方便删除
         onceFn.fn = fn;
 
-        this.on(id, name, onceFn.bind(this));
+        this.on(id, name, onceFn);
     },
 
     off: function off(id, name, fn) {
@@ -480,8 +483,10 @@ Sound.event = {
         }
 
         var cb;
+
         for (var i = 0; i < listeners.length; i++) {
             cb = listeners[i];
+
             if (cb === fn || cb.fn === fn) {
                 listeners.splice(i, 1);
                 break;
