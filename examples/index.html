@@ -33,16 +33,18 @@
 
 		bss.speak(title);
 
-		var playTitle = document.getElementById('play-title')
+		var playTitle = document.getElementById('play-title');
 		playTitle.addEventListener('click', function () {
-			bss.speak(title);
-		})
+			bss.speak(title).on('ended', function (argument) {
+				alert('play title end');
+			});
+		});
 
-		var playContent = document.getElementById('play-content')
+		var playContent = document.getElementById('play-content');
 		playContent.addEventListener('click', function () {
 			bss.stop();
 			bss.speak(content);
-		})
+		});
 
 	</script>
 </body>

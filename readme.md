@@ -23,7 +23,7 @@ import BDSSpeechSynthesizer from 'baidu-speech-synthesizer'
 let bss = new BDSSpeechSynthesizer()
 let speaker = bss.speak('hello world')
 
-speaker.on('end', () => bss.speak('bye world'))
+speaker.on('ended', () => bss.speak('bye world'))
 ```
 
 ## Quick Start
